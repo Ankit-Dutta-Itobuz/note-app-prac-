@@ -5,19 +5,17 @@ import noteRouter from "./noteRouter.js";
 const app = express();
 const port = 8080;
 
-mongoose.connect(
-    "mongodb+srv://ankit:dutta@cluster0.t6vx0ij.mongodb.net/?retryWrites=true&w=majority",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      },
-      (success)=> {
-        console.log("Connected to MongoDB - ", success);
-      },
-      (err) => {
-          console.log('Failed to connect - ', err);
-      }
-    );
+try{
+    mongoose.connect('mongodb+srv://ankit:dutta@cluster0.t6vx0ij.mongodb.net/?retryWrites=true&w=majority').then(()=>{
+        console.log("connected to mongo");
+    })
+}
+catch (err ){
+console.log(err);
+}
+
+
+app.use(express.json())
 
 app.use('/api', noteRouter);
 

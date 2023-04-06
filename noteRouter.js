@@ -1,5 +1,6 @@
 import { Router} from "express";
-import note from "./models/schema.js"
+import  NoteData  from "./models/schema.js"
+
 
 const noteRouter = Router();
 
@@ -11,19 +12,18 @@ noteRouter.get('/getAllNotes', (req, res)=> {
     })
 })
 
-noteRouter.post('/addNewNote', async(req, res)=> {
-    // req.body
-    const post = new note({
-		title: req.body.title,
-		text: req.body.text,
-	})
-    await post.save();
-
-    res.status(200).send({
-        data: [],
-        message: 'Note added',
-        success: true
+noteRouter.post('/addNewNote', (req, res)=> {
+    
+    const note = new NoteData({
+        title:req.body.title,
+        text:req.body.text
     })
+   
+     note.save().then((data)=>{
+        console.log(data);
+        res.send(data);
+     })
+   
 })
 
 noteRouter.delete('/delete', (req, res)=> {
